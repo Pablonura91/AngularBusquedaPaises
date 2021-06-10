@@ -20,7 +20,7 @@ const routes: Routes = [
     component: PorCapitalComponent,
   },
   {
-    path: 'pais:id',
+    path: 'pais/:id',
     component: VerPaisComponent,
   },
   {
@@ -33,5 +33,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-  
+
 export class AppRoutingModule {}

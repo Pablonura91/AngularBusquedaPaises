@@ -1,39 +1,43 @@
 <h2>Por País</h2>
-<hr>
+<hr />
 
 <div class="row">
-    <div class="col">
-        <form (ngSubmit)="buscar()" autocomplete="off">
-            <input type="text" name="termino" [(ngModel)]="termino" placeholder="Buscar país" class="form-control">
-        </form>
-    </div>
+  <div class="col">
+    <app-pais-input
+      (onEnter)="buscar($event)"
+      (onDebounce)="sugerencias($event)"
+      placeholder="Buscar por país"
+    ></app-pais-input>
+  </div>
 </div>
 
-<hr>
+<ul class="list-group" *ngIf="mostrarSugerencias">
+  <li
+    class="list-group-item list-group-action"
+    *ngFor="let pais of paisesSugeridos"
+  >
+    <a class="nav-link" [routerLink]="['/pais', pais.alpha2Code]">
+      {{ pais.name }}
+    </a>
+  </li>
 
-<div *ngIf="hayError" class="alert alert-danger">No se encontro nada con el parametro de busqueda: {{termino}}</div>
+  <li
+    class="list-group-item list-group-action"
+    (click)="buscarSugerido(termino)"
+  >
+    <a class="nav-link">
+      Buscar {{termino}}
+    </a>
+  </li>
+</ul>
 
-<div *ngIf="!hayError" class="row">
-    <div class="col">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Bandera</th>
-                    <th>Nombre</th>
-                    <th>Población</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>bandera</td>
-                    <td>nombre</td>
-                    <td>12345</td>
-                    <td><a href="#">más</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<hr />
+
+<div *ngIf="hayError" class="alert alert-danger">
+  No se encontro nada con el parametro de busqueda: {{ termino }}
+</div>
+<div *ngIf="paises.length > 0" class="row">
+  <div class="col">
+    <app-pais-tabla [paises]="paises"></app-pais-tabla>
+  </div>
 </div>
